@@ -1,21 +1,21 @@
 # LAB01
 
-##Short description
+## Short description
 
 Implementing DevOps to IT companies is starting from writing a clean and high-quality source code as well as its documentation. The goal of the lab is to learn the proper way of creating an IT project following best practices.
 
 As result, you will achieve creation a documented project on Node.js of a simple web server displaying a "Hello world!" message on a home page
 
-##List of functionalities
+## List of functionalities
 
-##Installation instructions
+## Installation instructions
 
 Install the Express package:
     
     npm install express
     
 
-##Usage instructions
+## Usage instructions
 
 1.Start a project
 2.Initialize a Node.js package
@@ -24,7 +24,7 @@ Install the Express package:
 5.Create a CHANGELOG.md file
 6.Describe the project in a README.md file
 
-##Author information
+## Author information
 
 Gonzalo Etse
 Yanis Bariteau
