@@ -26,5 +26,5 @@ Install the Express package:
 
 ## Author information
 
-Gonzalo Etse
-Yanis Bariteau
+*Alex DONG
+*Hamza LAMINE
