@@ -1,0 +1,16 @@
+{
+  "name": "myschool-devops-myproject",
+  "version": "1.0.0",
+  "description": "fist lab of DEVOPS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Alex DONG Hamza LAMINE",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
