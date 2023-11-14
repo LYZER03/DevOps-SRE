@@ -8,4 +8,8 @@ services:
     ports:
       - "5000:8080"
     environment:
-      # ...
+      - REDIS_HOST=redis  # Use the service name as the host
+      - REDIS_PORT=6379   # The default Redis port
+    depends_on:
+      - redis
+
