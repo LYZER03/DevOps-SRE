@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx-host-path
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: nginx-host-path
@@ -15,12 +15,16 @@ spec:
         app: nginx-host-path
     spec:
       volumes:
-        # TODO complete
+      - name: nginx-host-path-volume
+        hostPath:
+          path: /mnt/hostPath/  # Specify the path on the host machine
       containers:
       - name: nginx-container
         image: nginx
         ports:
-          - containerPort: 80
-            name: "http-server"
+        - containerPort: 80
+          name: "http-server"
         volumeMounts:
-          # TODO complete
+        - name: nginx-host-path-volume
+          mountPath: /usr/share/nginx/html # Mount path inside the container
+
