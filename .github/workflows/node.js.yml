@@ -6,7 +6,7 @@ name: Node.js CI
 env:
   MYSQL_DATABASE: test
   MYSQL_USER: root
-  MYSQL_PASSWORD: 
+  MYSQL_PASSWORD: root
   MYSQL_HOST: mysql-master
   NODE_ENV: test
 
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: project/backend
+        working-directory: ./project/backend
 
     # Service containers to run with `runner-job`
     services:
@@ -46,6 +46,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
+    - name: Wait for MySQL to be ready
+      run: sleep 10
         
     - name: Import MySQL Data
       run: |
