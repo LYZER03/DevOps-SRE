@@ -3,6 +3,13 @@
 
 name: Node.js CI
 
+env:
+  MYSQL_DATABASE: test
+  MYSQL_USER: root
+  MYSQL_PASSWORD: 
+  MYSQL_HOST: mysql-master
+  NODE_ENV: test
+
 on:
   push:
     branches: [ "main" ]
@@ -24,11 +31,14 @@ jobs:
         # Docker Hub image
         image: mysql
         env:
-          MYSQL_DATABASE: test
-          MYSQL_USER: root
+          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}
+          MYSQL_USER: ${{env.MYSQL_USER}
+          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}
+
         ports:
           # Opens tcp port 3306 on the host and service container
-          - 33306:tcp
+          - 3306:3306
 
     strategy:
       matrix:
@@ -36,6 +46,16 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in $(seq 1 30); do
+          nc -z localhost 33306 && echo "MySQL is up" && break
+          echo "Waiting for MySQL..."
+          sleep 5
+        done
+    - name: Import MySQL Data
+      run: |
+        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < dump.sql
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
