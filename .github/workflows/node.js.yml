@@ -3,6 +3,13 @@
 
 name: Node.js CI
 
+env:
+  MYSQL_DATABASE: test
+  MYSQL_USER: root
+  MYSQL_PASSWORD: 
+  MYSQL_HOST: mysql
+  NODE_ENV: test
+
 on:
   push:
     branches: [ "main" ]
@@ -23,16 +30,20 @@ jobs:
       mysql:
         # Docker Hub image
         image: mysql
-        env:
-          MYSQL_DATABASE: test
-          MYSQL_USER: root
         ports:
           # Opens tcp port 3306 on the host and service container
-          - 3306:3306
+          - 3306:tcp
+
+        env:
+          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
+          MYSQL_USER: ${{env.MYSQL_USER}}
+          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
+
 
     strategy:
       matrix:
-        node-version: ['14.x', '16.x', '18.x']
+        node-version: ['18.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
