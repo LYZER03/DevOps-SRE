@@ -3,20 +3,13 @@
 
 name: Node.js CI
 
-env:
-  MYSQL_DATABASE: test
-  MYSQL_USER: root
-  MYSQL_PASSWORD: root
-  MYSQL_HOST: mysql-master
-  NODE_ENV: test
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-job-with-mysql-5_7:
+jobs:
   runs-on: ubuntu-20.04
   services:
     db:
