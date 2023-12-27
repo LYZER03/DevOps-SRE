@@ -3,13 +3,6 @@
 
 name: Node.js CI
 
-env:
-  MYSQL_DATABASE: test
-  MYSQL_USER: root
-  MYSQL_PASSWORD: 
-  MYSQL_HOST: mysql
-  NODE_ENV: test
-
 on:
   push:
     branches: [ "main" ]
@@ -29,30 +22,20 @@ jobs:
       # Label used to access the service container
       mysql:
         # Docker Hub image
-        image: mysql:5.7
-        ports:
-          # Opens tcp port 33306 on the host and service container
-          - 33306:3306
-
+        image: mysql
         env:
-          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
-          MYSQL_USER: ${{env.MYSQL_USER}}
-          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
-          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
-
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          MYSQL_DATABASE: test
+          MYSQL_USER: root
+        ports:
+          # Opens tcp port 3306 on the host and service container
+          - 3306:3306
 
     strategy:
       matrix:
-        node-version: ['18.x']
+        node-version: ['14.x', '16.x', '18.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
-    - name: Set up MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < dump.sql
-
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
