@@ -31,10 +31,10 @@ jobs:
         # Docker Hub image
         image: mysql
         env:
-          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}
-          MYSQL_USER: ${{env.MYSQL_USER}
-          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}
-          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}
+          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
+          MYSQL_USER: ${{env.MYSQL_USER}}
+          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
 
         ports:
           # Opens tcp port 3306 on the host and service container
