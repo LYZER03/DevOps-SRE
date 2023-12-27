@@ -44,10 +44,9 @@ jobs:
     steps:
     - name: Wait for MySQL to be ready
       run: sleep 10
-        
     - name: Import MySQL Data
       run: |
-        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < dump.sql
+        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < project/backend/dump.sql
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
