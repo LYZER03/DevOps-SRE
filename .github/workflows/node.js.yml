@@ -1,4 +1,14 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
 name: Node.js CI
+
+env:
+  MYSQL_DATABASE: test
+  MYSQL_USER: root
+  MYSQL_PASSWORD: root
+  MYSQL_HOST: mysql-master
+  NODE_ENV: test
 
 on:
   push:
@@ -7,35 +17,37 @@ on:
     branches: [ "main" ]
 
 jobs:
-  runs-on: ubuntu-latest
-  services:
-    db:
-      image: mysql:5.7
-      ports:
-        - 3306:3306
-      env:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: test
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
-      options: >-
-        --health-cmd "mysqladmin ping"
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
+  build:
 
-  strategy:
-    matrix:
-      node-version: ['18.x']
-      # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-  
-  steps:
-    - name: Show Docker containers
-      run: docker ps -a
-    - name: Show databases for root user
-      run: mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SHOW DATABASES"
-    - name: Show databases for user1
-      run: mysql --protocol=tcp -h localhost -P 3306 -u user1 -proot -e "SHOW DATABASES"
+    runs-on: ubuntu-latest
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      mysql:
+        # Docker Hub image
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
+          MYSQL_USER: ${{env.MYSQL_USER}}
+          MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
+          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
+
+        ports:
+          # Opens tcp port 3306 on the host and service container
+          - 3306:3306
+
+    strategy:
+      matrix:
+        node-version: ['18.x']
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    
+    steps:
+    - name: Wait for MySQL to be ready
+      run: sleep 10
+        
+    - name: Import MySQL Data
+      run: |
+        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < dump.sql
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -46,4 +58,3 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-
