@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: project/backend # This is project backend root of the repository.
+        working-directory: project/backend
 
     # Service containers to run with `runner-job`
     services:
