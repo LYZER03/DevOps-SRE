@@ -20,6 +20,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project/backend
+
     # Service containers to run with `runner-job`
     services:
       # Label used to access the service container
@@ -44,6 +48,7 @@ jobs:
     steps:
     - name: Wait for MySQL to be ready
       run: sleep 10
+        
     - name: Import MySQL Data
       run: |
         mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < project/backend/dump.sql
