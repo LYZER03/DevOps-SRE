@@ -15,22 +15,24 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: LABS/Lab03 # This is lab3 on root of the repository.
+        working-directory: project/backend # This is project backend root of the repository.
 
     # Service containers to run with `runner-job`
     services:
       # Label used to access the service container
-      redis:
+      mysql:
         # Docker Hub image
-        image: redis
-        #
+        image: mysql
+        env:
+          MYSQL_DATABASE: test
+          MYSQL_USER: root
         ports:
-          # Opens tcp port 6379 on the host and service container
-          - 6379:6379
+          # Opens tcp port 3306 on the host and service container
+          - 3306:3306
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: ['14.x', '16.x', '18.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
@@ -40,7 +42,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: 'LABS/Lab03/package-lock.json'
+        cache-dependency-path: 'project/backend/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
