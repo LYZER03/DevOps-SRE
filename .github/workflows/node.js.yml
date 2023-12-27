@@ -29,10 +29,10 @@ jobs:
       # Label used to access the service container
       mysql:
         # Docker Hub image
-        image: mysql
+        image: mysql:5.7
         ports:
-          # Opens tcp port 3306 on the host and service container
-          - 3306:tcp
+          # Opens tcp port 33306 on the host and service container
+          - 33306:3306
 
         env:
           MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
@@ -40,6 +40,7 @@ jobs:
           MYSQL_PASSWORD: ${{env.MYSQL_PASSWORD}}
           MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
 
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
       matrix:
@@ -47,6 +48,11 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
+    - name: Set up MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < dump.sql
+
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
