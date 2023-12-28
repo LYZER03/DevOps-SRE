@@ -6,9 +6,7 @@ name: Node.js CI
 env:
   MYSQL_DATABASE: test
   MYSQL_USER: root
-  MYSQL_PASSWORD:
-  MYSQL_HOST: mysql-master
-  NODE_ENV: test
+
 
 on:
   push:
@@ -34,7 +32,7 @@ jobs:
           - 3306:3306
         env:
           MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
-          MYSQL_ROOT_PASSWORD: ${{env.MYSQL_PASSWORD}}
+          MYSQL_USER: ${{env.MYSQL_USER}}
         options: >-
           --name=mysql-master
           --health-cmd="mysqladmin ping"
@@ -65,7 +63,7 @@ jobs:
         echo "MYSQL_DATABASE: $MYSQL_DATABASE"
 
     - name: Import Database Data
-      run: mysql -h localhost -P 3306 -u root -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/project/backend/dumb.sql
+      run: mysql -h localhost -P 3306 -u root $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/project/backend/dumb.sql
 
 
 
