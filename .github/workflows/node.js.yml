@@ -58,6 +58,6 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - name: Import Database Data
-      run: mysql -h localhost -P 3306 -u root -p test < project/backend/dumb.sql
+      run: mysql -h localhost -P 3306 -u root -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/ece-devops-2023-fall-Dong-Lamine-George/project/backend/dumb.sql
 
     - run: npm test
