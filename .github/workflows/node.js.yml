@@ -6,7 +6,9 @@ name: Node.js CI
 env:
   MYSQL_DATABASE: test
   MYSQL_USER: root
-
+  MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+  MYSQL_HOST: mysql-master
+  NODE_ENV: test
 
 on:
   push:
@@ -31,7 +33,7 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
           MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
           MYSQL_USER: ${{env.MYSQL_USER}}
         options: >-
@@ -60,8 +62,13 @@ jobs:
       run: |
         echo "Current directory: $(pwd)"
         echo "Contents of project/backend: $(ls -al ${GITHUB_WORKSPACE}/project/backend)"
+        echo "MYSQL_PASSWORD: $MYSQL_ALLOW_EMPTY_PASSWORD"
+        echo "MYSQL_DATABASE: $MYSQL_DATABASE"
 
     - name: Import Database Data
       run: mysql -h localhost -P 3306 -u root $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/project/backend/dumb.sql
+
+
+
 
     - run: npm test
