@@ -55,6 +55,7 @@ jobs:
       run: |
         cat /var/log/mysql/error.log
     - name: Debug MySQL Port
-      run: echo "MySQL Port: $MYSQL_PORT"
+      run: |
+        echo "MySQL Port: $MYSQL_PORT"
 
     - run: npm test
