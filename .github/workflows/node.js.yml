@@ -1,7 +1,5 @@
 name: CI
 
-
-
 on: [push]
 
 jobs:
@@ -61,5 +59,16 @@ jobs:
         echo "MySQL Host: ${{ env.MYSQL_HOST }}"
         echo "MySQL Port: ${{ env.MYSQL_PORT }}"
         mysql --host ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -uroot -proot -e "SHOW DATABASES"
+    - name: Create MySQL Table
+      run: |
+        mysql --host ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -uroot -proot -e "
+        USE test;
+        CREATE TABLE books (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            title VARCHAR(45) NOT NULL,
+            desc VARCHAR(255) NOT NULL,
+            price INT NOT NULL,
+            cover VARCHAR(45) NOT NULL
+        );"
 
     - run: npm test
