@@ -11,6 +11,9 @@ jobs:
     defaults:
       run:
         working-directory: project/backend
+    strategy:
+      matrix:
+        node-version: [18.x]
 
     services:
       mysql:
@@ -54,8 +57,5 @@ jobs:
     - name: Print MySQL Error Log
       run: |
         cat /var/log/mysql/error.log
-    - name: Debug MySQL Port
-      run: |
-        echo "MySQL Port: $MYSQL_PORT"
 
     - run: npm test
