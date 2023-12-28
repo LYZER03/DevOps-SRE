@@ -27,7 +27,7 @@ jobs:
         # Docker Hub image
         image: mysql:8.0
         ports:
-          - 3306
+          - 33306:3306
         env:
           MYSQL_DATABASE: test
           MYSQL_USER: root
