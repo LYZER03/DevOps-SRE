@@ -46,12 +46,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     
     steps:
-    - name: Wait for MySQL to be ready
-      run: sleep 10
-        
-    - name: Import MySQL Data
-      run: |
-        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < project/backend/dump.sql
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -62,3 +56,10 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+    - name: Wait for MySQL to be ready
+      run: sleep 10
+        
+    - name: Import MySQL Data
+      run: |
+        mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < project/backend/dump.sql
