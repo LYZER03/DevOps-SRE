@@ -1,5 +1,5 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2";
 import cors from "cors";
 
 const app = express();
@@ -8,7 +8,7 @@ const app = express();
 const db = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: 'root',
-    password:"root",
+    password:"",
     database: 'test'
 });
 
