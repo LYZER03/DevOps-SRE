@@ -5,7 +5,7 @@ on:
     branches: [ "main","dev-Alex" ]
   pull_request:
     branches: [ "main" ]
-    
+
 env:
   MYSQL_DATABASE: test_db
   MYSQL_USER: root
@@ -57,6 +57,6 @@ jobs:
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE test;' -uroot -proot}
+        mysql -e 'CREATE DATABASE test;' -uroot -proot
 
     - run: npm test
