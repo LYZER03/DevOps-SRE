@@ -35,7 +35,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
           MYSQL_DATABASE: ${{env.MYSQL_DATABASE}}
-          MYSQL_USER: ${{env.MYSQL_USER}}
+
         options: >-
           --name=mysql-master
           --health-cmd="mysqladmin ping"
@@ -67,8 +67,5 @@ jobs:
 
     - name: Import Database Data
       run: mysql -h localhost -P 3306 -u root $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/project/backend/dumb.sql
-
-
-
 
     - run: npm test
