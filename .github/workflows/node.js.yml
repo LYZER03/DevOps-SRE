@@ -1,44 +1,21 @@
-name: Node.js CI
+name: CI
 
-on:
-  push:
-    branches: [ "main","dev-Alex" ]
-  pull_request:
-    branches: [ "main" ]
-
-env:
-  MYSQL_DATABASE: test
-  MYSQL_USER: root
-  MYSQL_PASSWORD: root
-  MYSQL_ROOT_PASSWORD: root
+on: [push]
 
 jobs:
-  build:
-
+ build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: project/backend
 
-    # Service containers to run with `runner-job`
     services:
-      # Label used to access the service container
       mysql:
-        # Docker Hub image
         image: mysql:8.0
-        ports:
-          - 3306:3306
         env:
-          MYSQL_DATABASE: test
-          MYSQL_USER: root
-          MYSQL_PASSWORD: root
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    strategy:
-      matrix:
-        node-version: ['18.x']
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -56,12 +33,5 @@ jobs:
     - name: Verify MySQL connection
       run: |
         mysql --version
-        sudo apt-get install -y mysql-client
         mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -proot -e "SHOW DATABASES"
-    - name: Set up MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE test;' -uroot -proot
-        sleep 5  # Add a delay of 5 seconds
-
     - run: npm test
