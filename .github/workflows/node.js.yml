@@ -63,4 +63,6 @@ jobs:
       run: |
         mysql --host ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -uroot -proot test < create_table.sql
 
-    - run: npm test
+    - name: Run Tests
+      run: npm test
+      run: exit 1
