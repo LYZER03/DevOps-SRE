@@ -1,16 +1,18 @@
 import express from "express";
-import mysql from "mysql";
+import mysql from "mysql2";
 import cors from "cors";
 
 const app = express();
 
 // MySQL
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: process.env.MYSQL_HOST,
     user: 'root',
-    password: "",
+    password:'root',
     database: 'test'
 });
+
+console.log('Connecting to MySQL on port:', process.env.MYSQL_PORT);
 
 db.connect((err) => {
     if (err) throw err;
