@@ -36,15 +36,15 @@ jobs:
       run: |
         echo "Current directory: $(pwd)"
         echo "Contents of project/backend: $(ls -al ${GITHUB_WORKSPACE}/project/backend)"
+    - name: Set up MySQL
+      run: |
+        sudo service mysql start
+        mysql -e 'CREATE DATABASE test;' -uroot -proot
+        sleep 5  # Add a delay of 5 seconds
     - name: Check MySQL Service Status
       run: |
         sudo service mysql status
     - name: Print MySQL Error Log
       run: |
         cat /var/log/mysql/error.log
-    - name: Set up MySQL
-      run: |
-        sudo service mysql start
-        mysql -e 'CREATE DATABASE test;' -uroot -proot
-        sleep 5  # Add a delay of 5 seconds
     - run: npm test
