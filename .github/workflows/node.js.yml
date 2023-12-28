@@ -55,7 +55,6 @@ jobs:
         cache-dependency-path: 'project/backend/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
 
     - name: Wait for MySQL to be ready
       run: sleep 10
@@ -63,3 +62,4 @@ jobs:
     - name: Import MySQL Data
       run: |
         mysql -h${{env.MYSQL_HOST}} -u${{env.MYSQL_USER}} -p${{env.MYSQL_PASSWORD}} ${{env.MYSQL_DATABASE}} < project/backend/dump.sql
+    - run: npm test
