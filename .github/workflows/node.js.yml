@@ -57,11 +57,12 @@ jobs:
         cache-dependency-path: 'project/backend/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
-    - name: Change to project directory
-      run: cd ${GITHUB_WORKSPACE}/project/backend
+    - name: Check File Existence
+      run: ls -al ${GITHUB_WORKSPACE}/project/backend/dumb.sql
 
     - name: Import Database Data
-      run: mysql -h localhost -P 3306 -u root -p$MYSQL_PASSWORD $MYSQL_DATABASE < dumb.sql
+      run: mysql -h localhost -P 3306 -u root -p$MYSQL_PASSWORD $MYSQL_DATABASE < ${GITHUB_WORKSPACE}/project/backend/dumb.sql
+
 
 
     - run: npm test
