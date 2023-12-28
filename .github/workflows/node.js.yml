@@ -66,6 +66,5 @@ jobs:
     - name: Run Tests
       run: | 
         npm test
-        pkill -f "npm test" || true
-      timeout-minutes: 1  # Set a timeout value in minutes
+
 
