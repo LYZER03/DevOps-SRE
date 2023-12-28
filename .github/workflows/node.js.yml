@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  MYSQL_DATABASE: test_db
+  MYSQL_DATABASE: test
   MYSQL_USER: root
   MYSQL_PASSWORD: root
   MYSQL_ROOT_PASSWORD: root
@@ -29,7 +29,7 @@ jobs:
         ports:
           - 3306
         env:
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: test
           MYSQL_USER: root
           MYSQL_PASSWORD: root
           MYSQL_ROOT_PASSWORD: root
@@ -53,10 +53,14 @@ jobs:
       run: |
         echo "Current directory: $(pwd)"
         echo "Contents of project/backend: $(ls -al ${GITHUB_WORKSPACE}/project/backend)"
-
+    - name: Debug MySQL Service
+      run: |
+        sudo netstat -tulpn
+        sudo lsof -i -P -n | grep LISTEN
     - name: Set up MySQL
       run: |
         sudo /etc/init.d/mysql start
         mysql -e 'CREATE DATABASE test;' -uroot -proot
+        sleep 5  # Add a delay of 5 seconds
 
     - run: npm test
