@@ -26,14 +26,13 @@ jobs:
       mysql:
         # Docker Hub image
         image: mysql:8.0
+        ports:
+          - 3306
         env:
           MYSQL_DATABASE: test
           MYSQL_USER: root
           MYSQL_PASSWORD: root
-
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          MYSQL_ROOT_PASSWORD: root
 
     strategy:
       matrix:
@@ -59,4 +58,5 @@ jobs:
       run: |
         echo "Current directory: $(pwd)"
         echo "Contents of project/backend: $(ls -al ${GITHUB_WORKSPACE}/project/backend)"
+
 
