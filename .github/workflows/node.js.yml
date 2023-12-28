@@ -35,11 +35,12 @@ jobs:
         cache-dependency-path: 'project/backend/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
-    
+
     - name: Debug Information
       run: |
         echo "Current directory: $(pwd)"
         echo "Contents of project/backend: $(ls -al ${GITHUB_WORKSPACE}/project/backend)"
+
 
     - name: Start MySQL Service
       run: sudo service mysql start
@@ -51,14 +52,14 @@ jobs:
     - name: Set MySQL Host and Port
       id: set-mysql-host-port
       run: |
-        echo "::set-env name=MYSQL_HOST::127.0.0.1"
-        echo "::set-env name=MYSQL_PORT::$(echo ${{ job.services.mysql.ports['3306'] }})"
+        echo "MYSQL_HOST=127.0.0.1" >> $GITHUB_ENV
+        echo "MYSQL_PORT=$(echo ${{ job.services.mysql.ports['3306'] }})" >> $GITHUB_ENV
 
     - name: Verify MySQL connection
       run: |
         mysql --version
-        echo "MySQL Host: $MYSQL_HOST"
-        echo "MySQL Port: $MYSQL_PORT"
-        mysql --host $MYSQL_HOST --port $MYSQL_PORT -uroot -proot -e "SHOW DATABASES"
+        echo "MySQL Host: ${{ env.MYSQL_HOST }}"
+        echo "MySQL Port: ${{ env.MYSQL_PORT }}"
+        mysql --host ${{ env.MYSQL_HOST }} --port ${{ env.MYSQL_PORT }} -uroot -proot -e "SHOW DATABASES"
 
     - run: npm test
