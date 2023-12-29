@@ -138,7 +138,7 @@ And finally, we can access to our server-side.
 
 <img src="https://i.ibb.co/br171mL/Docker.png" alt="docker compose" style="width:150px; float:right; margin-left:15px;">
 
-#### Docker compose
+## Make container orchestration using Docker Compose
 
 <br>
 <br>

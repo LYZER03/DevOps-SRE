@@ -6,12 +6,18 @@ import cors from "cors";
 const port = process.env.port || 8880
 const app = express();
 
+var mysqlHost = process.env.MYSQL_HOST || 'localhost';
+var mysqlPort = process.env.MYSQL_PORT || '3306';
+var mysqlUser = process.env.MYSQL_USER || 'root';
+var mysqlPass = process.env.MYSQL_PASS || '';
+var mysqlDB   = process.env.MYSQL_DB   || 'test';
+
 // MySQL
 const db = mysql.createConnection({
-    host: process.env.DOCKER_MYSQL_HOST || process.env.MYSQL_HOST,
-    user: 'root',
-    password:'root',
-    database: 'test'
+    host: mysqlHost,
+    user: mysqlUser,
+    password: mysqlPass,
+    database: mysqlDB
 });
 
 //console.log('Connecting to MySQL on host:', process.env.MYSQL_HOST);
@@ -21,6 +27,21 @@ db.connect((err) => {
     console.log('Connected to MySQL!');
     db.connected = true;
 });
+
+// Disconnect MySQL
+export function endConnection() {
+    if (db && db.connected) {
+        db.end((err) => {
+            if (err) {
+                console.log('Error while closing MySQL connection:', err);
+            } else {
+                console.log('MySQL connection closed successfully.');
+            }
+        });
+    } else {
+        console.log('No MySQL connection to close.');
+    }
+}
 
 app.use(express.json());
 app.use(cors());

@@ -1,5 +1,6 @@
-import { getBooks , createBook, deleteBook, updateBook } from "../index.js";
+import { getBooks, endConnection ,createBook , deleteBook, updateBook } from "../index.js";
 import { expect } from 'chai';
+
 
 describe('Books BACK TEST', () => {
 
@@ -16,6 +17,7 @@ describe('Books BACK TEST', () => {
         };
 
         getBooks(mockRequest, mockResponse);
+
     });
 
     // Test POST /books
@@ -79,6 +81,13 @@ describe('Books BACK TEST', () => {
 
         deleteBook(mockRequest, mockResponse);
     });
+
+    // Close the connection after all tests
+    after(() => {
+        endConnection();
+        process.exit();
+    });
+    
     
 });
 
