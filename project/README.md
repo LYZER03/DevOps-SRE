@@ -1,14 +1,17 @@
+<div style="text-align: justify"> 
 <img src="https://i.ibb.co/W5WsGgQ/ECE-LOGO-2021-web.png" alt="Description de l'image" style="width:200px; float:right; margin-left:15px;">
 
 # DEVOPS PROJECT
 
 ## CRUD application with React js Node js MySQL
 
+CRUD (Create, Read, Update, Delete) applications are a staple in software development. They allow users to interact with databases, retrieve information, and make changes to data. 
 
+In this DevOps project, we will build a CRUD application using React js for the frontend, Node js for the backend, and MySQL as the database. This will involve setting up a development environment, designing a user interface, creating an API, implementing the necessary database queries, and integrating the frontend and backend. 
 
 ## Installation
 
-Before starting, run in folder **./project/backend** and **./project/client**
+Before starting, run this command in folder **./project/backend** and **./project/client**
 ```
 npm i
 ```
@@ -19,7 +22,7 @@ npm i
 
 - **npm run start** in folder ./project/client :
 
-![npm start](https://i.ibb.co/d7Zx7xk/Capture-d-cran-2023-12-28-014840.png)
+![npm start](https://i.ibb.co/1fgw49v/Capture-d-cran-2023-12-29-160842.png)
 
 **Server-side** :
 
@@ -138,22 +141,27 @@ docker build -t bookstore .
 docker run --name nodebackendtest -p 8880:8880 -d bookstore
 ```
 
-In our local browser "http://localhost:8880", we should expect to display the homepage with the message '**Hello, this is the backend side!**", unfortunaly it didn't happens.
+If we set our app in different port (8080) and run it in our local machine we can access and retrieve the remote data from docker container MySQL database.
+
+We aim to establish communication between our application, residing in one container, and our database located in another container. When attempting to launch our application from the container and access it via our local browser at "http://localhost:8880," we anticipate the homepage to showcase the message '**Hello, this is the backend side!.**' Regrettably, this expected outcome does not materialize
+
 
 ![docker mysql](https://i.ibb.co/HY2zHCf/dockerproblem4.png)
 
-The problem was the host network, the app tried to connect in the network '127.0.0.1', but the database network in docker container was "172.17.0.1".
+
+The issue stemmed from a disparity in network configurations. Specifically, the application attempted to connect to the '127.0.0.1' network, while the Docker container hosting the database operated on the "172.17.0.1" network
+
 
 ![docker mysql](https://i.ibb.co/nPSM5y0/dockerproblem.png)
 
-So by typing this command, we can find in which host network was the DB.
+Executing this command allows us to identify the host network to which the database is connected.
 
 ```
 docker inspect [name-mysql-container]
 ```
 ![docker mysql](https://i.ibb.co/ScDVXnY/dockerproblem2.png)
 
-And finally, we can access to our server-side.
+Ultimately, we can now gain access to our server-side.
 
 ![docker mysql](https://i.ibb.co/y8LRqHn/dockerproblem3.png)
 
@@ -172,3 +180,4 @@ And finally, we can access to our server-side.
 ## Make a service mesh using Istio
 
 ## Implement Monitoring to your containerized application
+</div>

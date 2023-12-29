@@ -9,7 +9,7 @@ const app = express();
 var mysqlHost = process.env.MYSQL_HOST || 'localhost';
 var mysqlPort = process.env.MYSQL_PORT || '3306';
 var mysqlUser = process.env.MYSQL_USER || 'root';
-var mysqlPass = process.env.MYSQL_PASS || 'root';
+var mysqlPass = process.env.MYSQL_PASS || '';
 var mysqlDB   = process.env.MYSQL_DB   || 'test';
 
 // MySQL
