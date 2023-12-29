@@ -1,6 +1,8 @@
+<img src="https://i.ibb.co/W5WsGgQ/ECE-LOGO-2021-web.png" alt="Description de l'image" style="width:200px; float:right; margin-left:15px;">
+
 # DEVOPS PROJECT
 
-## CRUD application with React js Node js Mysql 
+## CRUD application with React js Node js MySQL
 
 
 
@@ -28,17 +30,121 @@ npm i
 fetching all data from MySQL database :
 ![npm start](https://i.ibb.co/6DyV733/Capture-d-cran-2023-12-28-014438.png)
 
+<img src="https://i.ibb.co/d0jp62j/Git-Hub-Actions.png" alt="git action" style="width:130px; float:right; margin-left:15px;">
+
 ## Apply CI/CD pipeline
 
 - **npm test** in folder ./project/backend to run unit test :
 
 ![unit test](https://i.ibb.co/jf8rpCP/Capture-d-cran-2023-12-27-210056.png)
 
+<img src="https://i.ibb.co/YhkHh3Q/Hashi-Corp-Vagrant.png" alt="vagrant" style="width:130px; float:right; margin-left:15px;">
+
 ## Configure and provision a virtual environment and run your application using the IaC approach
 
+### Problem encountered in this section :
 
+Impossible de Synchronize the project folder between guest machine and host machine.
+
+![unit test](https://i.ibb.co/G7zPMYJ/vagrant-rsync-problem.png)
+
+### Solution used are (but doesn't work for us):
+
+**Basic usage configuration** :
+```
+config.vm.synced_folder "../project", "/srv/website"
+```
+[link source](https://developer.hashicorp.com/vagrant/docs/synced-folders/basic_usage)
+
+**Install a plugin**: 
+```
+$ vagrant plugin install vagrant-vbguest
+```
+[link source](https://www.dissmeyer.com/2020/02/11issue-with-centos-7-vagrant-boxes-on-windows-10/)
+
+```
+$ vagrant plugin install vagrant-rsync-back
+```
+[link source](https://github.com/smerrill/vagrant-rsync-back#vagrant-rsync-back)
+
+<img src="https://i.ibb.co/br171mL/Docker.png" alt="docker" style="width:150px; float:right; margin-left:15px;">
 
 ## Build Docker image of your application
+
+#### Build MySQL image :
+
+Firstly we need to pull an official MySQL image
+
+```
+docker pull mysql
+```
+then run the image 
+
+```
+docker run mysql
+```
+but it ask to specify a password in the environnement
+
+![docker mysql](https://i.ibb.co/NFHRmyy/docker1.png)
+
+```
+docker run --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql
+```
+`-e` to set the environnement 
+
+`-p` set or add port number
+
+`-d` to run the image in the background
+
+Now MySQL is running
+
+![docker mysql](https://i.ibb.co/hFYFzXy/docker2.png)
+
+We check the connection to the DB using MySQL workbench for exemple :
+
+![docker mysql](https://i.ibb.co/L06hkW4/docker3.png)
+
+#### Build the backend :
+
+**build back-end app image** :
+
+```
+docker build -t bookstore .
+```
+**Run the app in Docker container** :
+
+```
+docker run --name nodebackendtest -p 8880:8880 -d bookstore
+```
+
+In our local browser "http://localhost:8880", we should expect to display the homepage with the message '**Hello, this is the backend side!**", unfortunaly it didn't happens.
+
+![docker mysql](https://i.ibb.co/HY2zHCf/dockerproblem4.png)
+
+The problem was the host network, the app tried to connect in the network '127.0.0.1', but the database network in docker container was "172.17.0.1".
+
+![docker mysql](https://i.ibb.co/nPSM5y0/dockerproblem.png)
+
+So by typing this command, we can find in which host network was the DB.
+
+```
+docker inspect [name-mysql-container]
+```
+![docker mysql](https://i.ibb.co/ScDVXnY/dockerproblem2.png)
+
+And finally, we can access to our server-side.
+
+![docker mysql](https://i.ibb.co/y8LRqHn/dockerproblem3.png)
+
+<img src="https://i.ibb.co/br171mL/Docker.png" alt="docker compose" style="width:150px; float:right; margin-left:15px;">
+
+#### Docker compose
+
+<br>
+<br>
+<br>
+<br>
+
 
 ## Make docker orchestration using Kubernetes
 

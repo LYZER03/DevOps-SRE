@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      MSSQL_SERVER: your_sql_server_address
+      MSSQL_USER: your_sql_username
+      MSSQL_PASSWORD: your_sql_password
+      MSSQL_DATABASE: your_database_name
+      PORT: 3000

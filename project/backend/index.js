@@ -1,18 +1,20 @@
 import express from "express";
 import mysql from "mysql2";
+import 'dotenv/config';
 import cors from "cors";
 
+const port = process.env.port || 8880
 const app = express();
 
 // MySQL
 const db = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
+    host: process.env.DOCKER_MYSQL_HOST || process.env.MYSQL_HOST,
     user: 'root',
     password:'root',
     database: 'test'
 });
 
-console.log('Connecting to MySQL on port:', process.env.MYSQL_PORT);
+//console.log('Connecting to MySQL on host:', process.env.MYSQL_HOST);
 
 db.connect((err) => {
     if (err) throw err;
@@ -90,10 +92,10 @@ app.delete("/books/:id", deleteBook);
 app.put("/books/:id", updateBook);
 
 // Server
-export const server = app.listen(8800, () => {
-    console.log("Connected to backend!");
+export const server = app.listen(8880, () => {
+    console.log(`Connected to backend! listening port: ${port}`);
 });
 
-export default db;
+//export default db;
 
 
