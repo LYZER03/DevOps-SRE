@@ -38,6 +38,27 @@ fetching all data from MySQL database :
 
 ![unit test](https://i.ibb.co/jf8rpCP/Capture-d-cran-2023-12-27-210056.png)
 
+#### Github Action workflow :
+
+
+![git action](https://i.ibb.co/th9hYR6/Capture-d-cran-2023-12-29-144616.png)
+
+**Check all folders :**
+
+![git action](https://i.ibb.co/pn3t4Pc/Capture-d-cran-2023-12-29-144744.png)
+
+**Start and configure MySQL service :** 
+
+![git action](https://i.ibb.co/9pL2HWJ/Capture-d-cran-2023-12-29-144803.png)
+
+**Check the connection :**
+
+![git action](https://i.ibb.co/CmKQqGv/Capture-d-cran-2023-12-29-144821.png)
+
+**Check unit test :**
+
+![git action](https://i.ibb.co/84ycVLT/Capture-d-cran-2023-12-29-144649.png)
+
 <img src="https://i.ibb.co/YhkHh3Q/Hashi-Corp-Vagrant.png" alt="vagrant" style="width:130px; float:right; margin-left:15px;">
 
 ## Configure and provision a virtual environment and run your application using the IaC approach
