@@ -96,6 +96,6 @@ export const server = app.listen(8880, () => {
     console.log(`Connected to backend! listening port: ${port}`);
 });
 
-//export default db;
+export default db;
 
 
