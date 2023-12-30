@@ -31,7 +31,8 @@ npm i
 ![npm start](https://i.ibb.co/prj4cGF/Capture-d-cran-2023-12-28-014352.png)
 
 fetching all data from MySQL database :
-![npm start](https://i.ibb.co/6DyV733/Capture-d-cran-2023-12-28-014438.png)
+
+![npm start](https://i.ibb.co/pLpbqtC/Capture-d-cran-2023-12-30-154856.png)
 
 <img src="https://i.ibb.co/d0jp62j/Git-Hub-Actions.png" alt="git action" style="width:130px; float:right; margin-left:15px;">
 
