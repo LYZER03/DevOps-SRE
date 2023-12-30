@@ -3,14 +3,13 @@ import mysql from "mysql2";
 import 'dotenv/config';
 import cors from "cors";
 
-const port = process.env.port || 8880
 const app = express();
 
 var mysqlHost = process.env.MYSQL_HOST || 'localhost';
 var mysqlPort = process.env.MYSQL_PORT || '3306';
 var mysqlUser = process.env.MYSQL_USER || 'root';
-var mysqlPass = process.env.MYSQL_PASS || '';
-var mysqlDB   = process.env.MYSQL_DB   || 'test';
+var mysqlPass = process.env.MYSQL_PASSWORD || 'root';
+var mysqlDB   = process.env.MYSQL_DATABASE   || 'test';
 
 // MySQL
 const db = mysql.createConnection({
@@ -20,7 +19,7 @@ const db = mysql.createConnection({
     database: mysqlDB
 });
 
-//console.log('Connecting to MySQL on host:', process.env.MYSQL_HOST);
+// //console.log('Connecting to MySQL on host:', process.env.MYSQL_HOST);
 
 db.connect((err) => {
     if (err) throw err;
@@ -114,7 +113,7 @@ app.put("/books/:id", updateBook);
 
 // Server
 export const server = app.listen(8880, () => {
-    console.log(`Connected to backend! listening port: ${port}`);
+    console.log("Connected to backend!");
 });
 
 export default db;

@@ -1,14 +1,37 @@
 version: '3'
+
 services:
+  mysql:
+    build: ./project/backend/db
+    container_name: some-mysql
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
   web:
     build:
-      context: .
+      context: ./project/backend
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8880:8880"
     environment:
-      MSSQL_SERVER: your_sql_server_address
-      MSSQL_USER: your_sql_username
-      MSSQL_PASSWORD: your_sql_password
-      MSSQL_DATABASE: your_database_name
-      PORT: 3000
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_HOST: mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: always
+
+volumes:
+  mysql_data:
+
