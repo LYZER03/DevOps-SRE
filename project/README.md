@@ -68,7 +68,11 @@ fetching all data from MySQL database :
 
 ## Problem encountered in this section :
 
+<<<<<<< HEAD
 Unable to synchronize the project folder between the guest machine and the host machine.
+=======
+Impossible to Synchronize the project folder between guest machine and host machine.
+>>>>>>> 914bf30b0011d8dadeb53262e6af78c12ae3d3c8
 
 ![unit test](https://i.ibb.co/G7zPMYJ/vagrant-rsync-problem.png)
 
@@ -107,14 +111,14 @@ then run the image
 ```
 docker run mysql
 ```
-but it ask to specify a password in the environnement
+but it ask to specify a password in the environment
 
 ![docker mysql](https://i.ibb.co/NFHRmyy/docker1.png)
 
 ```
 docker run --name some-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql
 ```
-`-e` to set the environnement 
+`-e` to set the environment 
 
 `-p` set or add port number
 
