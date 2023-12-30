@@ -69,11 +69,7 @@ fetching all data from MySQL database :
 
 ## Problem encountered in this section :
 
-<<<<<<< HEAD
 Unable to synchronize the project folder between the guest machine and the host machine.
-=======
-Impossible to Synchronize the project folder between guest machine and host machine.
->>>>>>> 914bf30b0011d8dadeb53262e6af78c12ae3d3c8
 
 ![unit test](https://i.ibb.co/G7zPMYJ/vagrant-rsync-problem.png)
 
