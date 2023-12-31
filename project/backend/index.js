@@ -15,7 +15,6 @@ var port = process.env.PORT || '8080';
 // MySQL
 const db = mysql.createConnection({
     host: mysqlHost,
-    port: mysqlPort,
     user: mysqlUser,
     password: mysqlPass,
     database: mysqlDB
