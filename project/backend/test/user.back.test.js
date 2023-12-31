@@ -82,11 +82,11 @@ describe('Books BACK TEST', () => {
         deleteBook(mockRequest, mockResponse);
     });
 
-    // Close the connection after all tests
-    after(() => {
-        endConnection();
-        process.exit();
-    });
+    // // Close the connection after all tests
+    // after(() => {
+    //     endConnection();
+    //     process.exit();
+    // });
     
     
 });

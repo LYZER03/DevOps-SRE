@@ -3,14 +3,14 @@ import mysql from "mysql2";
 import 'dotenv/config';
 import cors from "cors";
 
-const port = process.env.port || 8880
 const app = express();
 
 var mysqlHost = process.env.MYSQL_HOST || 'localhost';
 var mysqlPort = process.env.MYSQL_PORT || '3306';
 var mysqlUser = process.env.MYSQL_USER || 'root';
-var mysqlPass = process.env.MYSQL_PASS || 'root';
-var mysqlDB   = process.env.MYSQL_DB   || 'test';
+var mysqlPass = process.env.MYSQL_PASSWORD || 'root';
+var mysqlDB   = process.env.MYSQL_DATABASE   || 'test';
+var port = process.env.PORT || '8880';
 
 // MySQL
 const db = mysql.createConnection({
