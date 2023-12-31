@@ -1,3 +1,5 @@
+use test;
+
 -- create_table.sql
 CREATE TABLE books (
     id INT PRIMARY KEY AUTO_INCREMENT,

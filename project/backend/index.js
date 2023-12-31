@@ -10,10 +10,12 @@ var mysqlPort = process.env.MYSQL_PORT || '3306';
 var mysqlUser = process.env.MYSQL_USER || 'root';
 var mysqlPass = process.env.MYSQL_PASSWORD || 'root';
 var mysqlDB   = process.env.MYSQL_DATABASE   || 'test';
+var port = process.env.PORT || '8080';
 
 // MySQL
 const db = mysql.createConnection({
     host: mysqlHost,
+    port: mysqlPort,
     user: mysqlUser,
     password: mysqlPass,
     database: mysqlDB
@@ -112,7 +114,7 @@ app.delete("/books/:id", deleteBook);
 app.put("/books/:id", updateBook);
 
 // Server
-export const server = app.listen(8880, () => {
+export const server = app.listen(port, () => {
     console.log("Connected to backend!");
 });
 

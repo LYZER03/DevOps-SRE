@@ -3,21 +3,35 @@
 
 # DEVOPS PROJECT
 
-## CRUD application with React js Node js MySQL
+## I/ CRUD application with React js Node js MySQL
 
 CRUD (Create, Read, Update, Delete) applications are a staple in software development. They allow users to interact with databases, retrieve information, and make changes to data. 
 
 In this DevOps project, we will build a CRUD application using React js for the frontend, Node js for the backend, and MySQL as the database. This will involve setting up a development environment, designing a user interface, creating an API, implementing the necessary database queries, and integrating the frontend and backend. 
 
-## Installation
+## II/ Installation
 
-Before starting, run this command in folder **./project/backend** and **./project/client**
+Before starting, run this command in folder **./project/backend** and **./project/client** :
 ```
 npm i
 ```
+### Install MySQL Workbench to configure and manipulate the database manually:
 
+MySQL workbench : [link here](https://www.mysql.com/products/workbench/)
 
-## Functionalities
+### Install Wamp, mamp or xamp to create a server locally :
+
+**for window or linux users** :
+
+Wamp : [link here]()
+
+Xamp : [link here](https://www.apachefriends.org/fr/index.html)
+
+**for MAC users** : 
+
+Mamp: [link here](https://www.mamp.info/en/downloads/)
+
+## III/ Functionalities
 **Client-side** :
 
 - **npm run start** in folder ./project/client :
@@ -36,13 +50,14 @@ fetching all data from MySQL database :
 
 <img src="https://i.ibb.co/d0jp62j/Git-Hub-Actions.png" alt="git action" style="width:130px; float:right; margin-left:15px;">
 
-# Apply CI/CD pipeline
+# IV/ Apply CI/CD pipeline
 
+## 1) Run unit test in local
 - **npm test** in folder ./project/backend to run unit test :
 
 ![unit test](https://i.ibb.co/jf8rpCP/Capture-d-cran-2023-12-27-210056.png)
 
-## Github Action workflow :
+## 2) Github Action workflow :
 
 
 ![git action](https://i.ibb.co/th9hYR6/Capture-d-cran-2023-12-29-144616.png)
@@ -65,7 +80,7 @@ fetching all data from MySQL database :
 
 <img src="https://i.ibb.co/YhkHh3Q/Hashi-Corp-Vagrant.png" alt="vagrant" style="width:130px; float:right; margin-left:15px;">
 
-# Configure and provision a virtual environment and run your application using the IaC approach
+# V/ Configure and provision a virtual environment and run your application using the IaC approach
 
 ## Problem encountered in this section :
 
@@ -94,9 +109,9 @@ $ vagrant plugin install vagrant-rsync-back
 
 <img src="https://i.ibb.co/br171mL/Docker.png" alt="docker" style="width:150px; float:right; margin-left:15px;">
 
-# Build Docker image of your application
+# VI/ Build Docker image of your application
 
-## Build MySQL image :
+## 1) Build MySQL image :
 
 Firstly we need to pull an official MySQL image
 
@@ -129,7 +144,7 @@ We check the connection to the DB using MySQL workbench for exemple :
 
 ![docker mysql](https://i.ibb.co/L06hkW4/docker3.png)
 
-## Build the backend :
+## 2) Build the backend :
 
 **build back-end app image** :
 
@@ -168,7 +183,7 @@ Ultimately, we can now gain access to our server-side.
 
 <img src="https://i.ibb.co/br171mL/Docker.png" alt="docker compose" style="width:150px; float:right; margin-left:15px;">
 
-# Make container orchestration using Docker Compose
+# VII/ Make container orchestration using Docker Compose
 
 Create a docker-compose.yml file and run this command to start :
 
@@ -187,7 +202,7 @@ Once the initialization process is completed, it is necessary to restart the con
 
 It looks like we have a Docker Compose file that defines two services, mysql and web. The web service depends on the mysql service, which means Docker Compose will ensure that the mysql service is started before the web service.
 
-```
+```yml
 services:
   mysql:
     build: ./project/backend/db
@@ -218,7 +233,7 @@ services:
 
 However, depending on the size of our MySQL database and the resources available on our machine, there might be some delay during the initialization of the MySQL service. To address this, we can add a health check to the web service to wait until the MySQL service is ready before starting your app.
 
-```
+```yml
 services:
   mysql:
     build: ./project/backend/db
@@ -256,16 +271,244 @@ Now, our backend application waits for the completion of the MySQL initializatio
 ![docker compose mysql](https://i.ibb.co/wRb0kbF/dockercompose5.png)
 
 
-# Make docker orchestration using Kubernetes
+# VIII/ Make docker orchestration using Kubernetes
+
+### 1) Build a Persistent Volume Claim (PVC)
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  labels:
+    app: mysql
+    tier: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+### 2) MySQL pod's deployment
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: database
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "root"
+        - name: MYSQL_DATABASE
+          value: "test"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc
+```
+
+### 3) Create a service object that will permit other pods to access the MySQL database pod
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+    tier: database
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
+    tier: database
+  #type: ClusterIP
+  clusterIP: None
+```
+
+### 4) Minikube
+
+Minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows.
+
+```
+minikube start
+```
+
+![docker compose mysql](https://i.ibb.co/GdN2BYd/1.png)
+
+### 5) Applying this MySQL deployment file (content: PVC, MySQL pod  and Service)
+
+```
+kubectl apply -f mysql-deployment.yaml
+```
+
+![docker compose mysql](https://i.ibb.co/tsSQ9YL/2.png)
+
+### 6) Display pod and deployment
+
+```
+kubectl get deployment
+```
+
+```
+kubectl get pod
+```
+![docker compose mysql](https://i.ibb.co/Ch4wjf5/3.png)
+![docker compose mysql](https://i.ibb.co/bbspQjX/4.png)
+
+```
+kubectl port-forward <POD NAME> 3308:3306
+```
+![docker compose mysql](https://i.ibb.co/93Qf8Qp/55.png)
+
+### 7) Check Database
+
+```
+kubectl run -it --rm --image=mysql:8.0 --restart=Never mysql-client -- <POD NAME> -h mysql -proot
+```
+This command runs the MySQL container in an interactive mode, which allows you to execute commands at the time of running the container.
+A MySQL shell will open and you could create new databases, new tables, insert data to tables and do more SQL commands.
+
+![docker compose mysql](https://i.ibb.co/cyK6rXW/5.png)
+![docker compose mysql](https://i.ibb.co/JQhRSF4/6.png)
+
+## 8) Create a deployment for our backend node js app
+
+### a) Use the prodived in "./project/backend" Dockerfile and build the image.
+```
+docker build -t backend-app .
+```
+![docker compose mysql](https://i.ibb.co/t3v5dJt/Capture-d-cran-2023-12-31-013754.png)
+
+### b) Let’s create our Kubernetes deployment for our app.
 
 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-app-deployment
+  template:
+    metadata:
+      labels:
+        app: backend-app-deployment
+    spec:
+      containers:
+      - name: backend-app-deployment
+        image: backend-app:latest
+        ports:
+        - containerPort: 3030
+        env:
+        - name: MYSQL_HOST
+          value: mysql
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: test
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: PORT
+          value: "3030"
+```
+### c) Create a service.
 
-<br>
-<br>
-<br>
-<br>
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-deployment-service
+spec:
+  selector:
+    app: backend-app-deployment
+  ports:
+  - protocol: TCP
+    port: 3030
+    targetPort: 3030
+  type: NodePort
+```
 
-## Make a service mesh using Istio
+### d) Issue encountered
 
-## Implement Monitoring to your containerized application
+Our Docker image is stored locally on our machine, we can normaly specify the image name without a registry in the "image" field. Here's an example:
+
+```yaml
+containers:
+  - name: node-app
+    image: your-image-name:your-tag
+    ports:
+    - containerPort: 8080
+```
+We should replace "**your-image-name**" with the name of our Docker image and "**your-tag**" with the specific tag of the image we want to use.
+
+To make sure that the Docker image is built and available locally on the machine where we're deploying the Kubernetes manifest. we can verify the presence of our local Docker images using the following command :
+
+```
+docker images
+```
+
+![kubernetes](https://i.ibb.co/TKqWhM9/Capture-d-cran-2023-12-31-015033.png)
+
+
+But our pod still displaying the state "**ImagePullBackOff**" and also some times "**ErrImagePull**"
+
+#### Others lines commands :
+
+```
+kubectl delete pod <$POD_NAME>
+kubectl delete service <$SERVICE_NAME>
+kubectl delete deployment <$DEPLOYMENT_NAME>
+```
+
+## *We're currently stuck in this section, unable to proceed any further at the moment.*
+
+# The remaining parts of the project :
+
+```
+7) Create a deployment for our frontend app
+
+IX) Make a service mesh using Istio
+
+X) Implement Monitoring to your containerized application
+```
+
+# Conclusion :
+
+In conclusion, this project embarked on the development of a complete CRUD (Create, Read, Update, Delete) application, integrating key DevOps practices to improve the software development lifecycle. The implementation encompassed continuous testing, continuous integration and deployment (CI/CD), Docker containerization and container orchestration. Despite difficulties encountered, such as Docker image issues affecting storage in Kubernetes, and folder synchronization hurdles impacting infrastructure as code, significant progress has been made in establishing a robust development and deployment pipeline.
+
+Although some objectives, such as cloud-native technology adoption and monitoring, have not yet been achieved due to Kubernetes component dependencies, the project has laid a solid foundation for future expansion. The commitment to DevOps principles and the integration of containerization technologies have enabled the application to be scalable and improve its maintainability. Despite the obstacles encountered, the project's successes underline the importance of adaptability and perseverance in navigating the complex landscape of modern software development and infrastructure management.
 </div>

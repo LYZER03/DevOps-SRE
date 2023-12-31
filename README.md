@@ -39,7 +39,6 @@ By participating in these labs and the DevOps project, students gain valuable sk
 
 ## Course Feedback
 
-In general, we believe the classes provide a highly practical introduction to application development. The course content is sequential, which facilitates our learning progress as students. What we enjoyed the most was the integration of Github CI/CD and Docker, as this platform simplifies the management of various processes when creating a complete web page, such as deployment, containerization, and environment setup.
+In general, our courses aim to provide a practical and pragmatic introduction to application development. The program follows a logical sequence, favoring a fluid learning trajectory for students. We particularly appreciate the seamless integration of key tools such as GitHub CI/CD, Docker, Vagrant, Kubernetes and istio. This integration significantly streamlines the management of the various processes essential to building a complete application, encompassing deployment, containerization and environment configuration.
 
-We believe it's important for students to have a minimum level of web programming knowledge in HTML, CSS, and JS before taking this course. Some topics, like DevOps practices, Continuous Integration, or Docker, are covered more superficially, and individuals without prior knowledge might feel overwhelmed trying to keep up with the class pace.
-
+To maximize the benefits of this course, we recommend that students possess a fundamental understanding of web programming languages such as HTML, CSS and JS. Some advanced topics, including DevOps practices, continuous integration, Docker, Infrastructure as Code, Istio and Kubernetes, are introduced, although we recognize that these can be covered at a rapid pace. Those with no prior knowledge in these areas may find it difficult to keep up with the accelerated progression of the course.

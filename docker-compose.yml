@@ -21,7 +21,7 @@ services:
       context: ./project/backend
       dockerfile: Dockerfile
     ports:
-      - "8880:8880"
+      - "8080:8080"
     environment:
       MYSQL_DATABASE: test
       MYSQL_USER: root
