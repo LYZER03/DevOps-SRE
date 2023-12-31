@@ -511,9 +511,34 @@ IX) Make a service mesh using Istio
 X) Implement Monitoring to your containerized application
 ```
 
-# Conclusion :
+# Conclusion
 
 In conclusion, this project embarked on the development of a complete CRUD (Create, Read, Update, Delete) application, integrating key DevOps practices to improve the software development lifecycle. The implementation encompassed continuous testing, continuous integration and deployment (CI/CD), Docker containerization and container orchestration. Despite difficulties encountered, such as Docker image issues affecting storage in Kubernetes, and folder synchronization hurdles impacting infrastructure as code, significant progress has been made in establishing a robust development and deployment pipeline.
 
 Although some objectives, such as cloud-native technology adoption and monitoring, have not yet been achieved due to Kubernetes component dependencies, the project has laid a solid foundation for future expansion. The commitment to DevOps principles and the integration of containerization technologies have enabled the application to be scalable and improve its maintainability. Despite the obstacles encountered, the project's successes underline the importance of adaptability and perseverance in navigating the complex landscape of modern software development and infrastructure management.
+
+# Author
+
+Alex DONG - alex.dong@edu.ece.fr - dongalex93@gmail.com
+
+Hamza LAMINE - hamza.lamine@edu.ece.fr
+
+Narcis GEORGE - narcis.george@edu.ece.fr
+
+**Project Link**: https://github.com/LYZER03/ece-devops-2023-fall-Dong-Lamine-George
+
+
+
+# Acknowledgments
+
+[Adaltas Devops](https://github.com/adaltas/ece-devops-2023-fall)
+
+[Dockerize node js app](https://www.bezkoder.com/docker-compose-nodejs-mysql/)
+
+[Docker MySQL and Node js](https://varsubham.medium.com/nodejs-mysql-docker-compose-ad156cd0c885)
+
+[K8s MySQL](https://dev.to/musolemasu/deploy-a-mysql-database-server-in-kubernetes-static-dpc)
+
+
+
 </div>
