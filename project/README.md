@@ -31,6 +31,11 @@ Xamp : [link here](https://www.apachefriends.org/fr/index.html)
 
 Mamp: [link here](https://www.mamp.info/en/downloads/)
 
+### Environment Variables Setup :
+
+* **Backend app folder**': `.env.exemple` in the `./project/backend` folder.
+
+
 ## III/ Functionalities
 **Client-side** :
 
